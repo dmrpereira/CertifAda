@@ -1,0 +1,14 @@
+project CertifAda is
+
+   for Main use ("main.adb");
+
+   package Naming is
+      for Spec_Suffix ("ada") use ".ads";
+      for Body_Suffix ("ada") use ".adb";
+      for Separate_Suffix use ".adb";
+      for Casing use "MixedCase";
+      for Dot_Replacement use "-";
+   end Naming;
+
+end CertifAda;
+
