@@ -13,6 +13,9 @@ generic
 
 private
 
+   type Fol_Term_Discr (T : Fol_Term_Kind) ;
+
+
    type Fol_Term_Discr (T : Fol_Term_Kind) is
       record
 	 case T is
