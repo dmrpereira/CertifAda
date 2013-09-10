@@ -1,0 +1,76 @@
+\documentclass[]{llncs}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{stmaryrd}
+\usepackage{todonotes}
+\usepackage{acronym}
+\usepackage{tikz,pgfplots,pgf}
+\usepackage{breqn}
+\usepackage[ruled,vlined]{algorithm2e}
+
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{array}
+
+
+\newenvironment{axioms}
+ {\enumerate[labelindent=0.25cm,leftmargin=*,label=A\arabic*., ref=A\arabic*]}
+ {\endenumerate}
+\makeatletter
+\newcommand\varitem[1]{\item[A\arabic{enumi}\rlap{$#1$}.]%
+  \edef\@currentlabel{A\arabic{enumi}{$#1$}}}
+\makeatother
+
+
+\begin{document}
+
+\title{A Monitor Architecture for Runtime Verification of Hard Real-Time Systems}
+
+\author{André de Matos Pedro, David Pereira, Luís Miguel Pinho, and Jorge Sousa Pinto}
+\institute{CISTER Research Centre/INESC-TEC 
+School of Engineering (ISEP), Polytechnic Institute of Porto (IPP), Portugal \\
+\{anmap,dmrpe,lmp\}@isep.ipp.pt\\
+HASLAB/INESC-TEC 
+School of Engineering, University of Minho, Portugal \\
+jsp@di.uminho.pt}
+
+\maketitle
+
+\begin{abstract}
+In this paper we propose a software architecture that enables runtime verification of hard real-time systems coded in Ada 2012. 
+\end{abstract}
+
+
+\section{Introduction}
+
+Runtime verification is an emerging formal verification thechnique in the context of hard real-time systems. Runtime verification is a kind of {\em lightweight formal method} that does not have th goal of constructing a mechanically verifiable evidence of some property. Instead, runtime verification concerns with real data that is observed during a system's execution, and if such data is conformant with a prescribed formal specification.
+
+
+
+\subsection{Contributions}
+
+In this paper we introduce a monitor based architecture for enabling runtime verification of programs witten in Ada 2012. We detail each component of the architecture, the interactions and dependences between all the system's components. We concretize the abstract architecture with two formal methods that are common in runtime verification: temporal logic and regular expressions. In particular, and because we are in the context of real-time systems verification, we present a formal model of monitor based in timed regular expressions, as well as in metric temporal logic with durations. 
+
+
+\subsection{Paper Organization}
+
+
+\section{Related Work}
+\label{sec:relatedwork}
+
+\newacro{TLTL}{\emph{timed linear-time temporal logic}}
+\newacro{ECA}{\emph{event-clock automata}}
+
+So far, not many approaches for runtime verification of real-time
+
+\section{Requirements for a Runtime Verification}
+\cite{Lakhneche:1995:MTL:202379.202389}
+
+
+\bibliographystyle{plain}
+\bibliography{ref}
+
+\end{document}
