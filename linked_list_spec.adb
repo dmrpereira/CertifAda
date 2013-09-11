@@ -9,6 +9,16 @@ package body Linked_List_Spec is
    begin
       return L.List_Node_Next;
    end Tail;
+   
+   function Length(L:in Linked_List) return Natural is
+   begin
+      if L = null then
+	 return 0;
+      else
+	 return (1 + Length(L.List_Node_Next));
+      end if;
+   end Length;
+
       
    function Cons(X:in T;L: in Linked_List) return Linked_List is
       L1 : Linked_List := new Linked_List_Node ;

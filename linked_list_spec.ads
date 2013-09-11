@@ -16,8 +16,12 @@ package Linked_List_Spec is
      with Pre => (L /= null);
    function Tail(L:in Linked_List) return Linked_List;
    
-   function Cons(X:in T;L: in Linked_List) return Linked_List;
-   function App(L1,L2: in Linked_List) return Linked_List;
+   function Length(L:in Linked_List) return Natural;
+      
+   function Cons(X:in T;L: in Linked_List) return Linked_List
+     with Post => (Length(Cons'Result) = Length(L) + 1);
+   function App(L1,L2: in Linked_List) return Linked_List
+     with Post => (Length(App'Result) = Length(L1)+Length(L2));
    
    type Filter_Access is access function(X:in T) return Boolean;
    
