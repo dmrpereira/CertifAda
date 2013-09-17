@@ -25,22 +25,37 @@
 \makeatother
 
 
+\newcommand{\configseq}[3]{\ensuremath{\langle\,#1\,,\,#2\,,\,#3\,\rangle}}
+\newcommand{\seqstep}[2]{\ensuremath{{#1}\;\longrightarrow}\;{#2}}
+
+
 \begin{document}
 
-\title{A Monitor Architecture for Runtime Verification of Hard Real-Time Systems}
+\title{On Revisiting Hoare Logic for Real-Time Systems}
 
-\author{André de Matos Pedro, David Pereira, Luís Miguel Pinho, and Jorge Sousa Pinto}
-\institute{CISTER Research Centre/INESC-TEC 
-School of Engineering (ISEP), Polytechnic Institute of Porto (IPP), Portugal \\
-\{anmap,dmrpe,lmp\}@isep.ipp.pt\\
-HASLAB/INESC-TEC 
-School of Engineering, University of Minho, Portugal \\
-jsp@di.uminho.pt}
+\author{David Pereira and Luís Miguel Pinho}
+\institute{CISTER Research Centre/INESC-TEC \\
+School of Engineering (ISEP) -- Polytechnic Institute of Porto (IPP), Portugal \\
+{\tt \{dmrpe,lmp\}@isep.ipp.pt}}
 
 \maketitle
 
 \begin{abstract}
-In this paper we propose a software architecture that enables runtime verification of hard real-time systems coded in Ada 2012. 
+  Modern Real-Time Systems (RTSs) are complex and pervasive, and
+  normally assume the form of software components embedded in some
+  larger system. Several RTSs have a safety-critical behavior, {\sl
+    i.e.}, their failure can lead to catastrophic events. Henceforth,
+  this class of systems must be developed with levels of rigor that
+  are not characteristic of the development cycle of standard
+  software. Formal specification and verification are being
+  progressively introduced to detect flaws in the development cycle of
+  RTSs. The most popular techniques are Model Checking and Abstract
+  Interpreation, but reality is that most verification activities
+  reduce to unit testing and fault-injection. Actual program
+  verification is almost no existant. In this paper we extend Hoare
+  logic with non-functional primitives characteristic from RTSs. We
+  present a simple language for programming hierarquical RTSs, its
+  operational semantics, and show the associated proof-system sound.
 \end{abstract}
 
 
@@ -52,10 +67,58 @@ Runtime verification is an emerging formal verification thechnique in the contex
 
 \subsection{Contributions}
 
-In this paper we introduce a monitor based architecture for enabling runtime verification of programs witten in Ada 2012. We detail each component of the architecture, the interactions and dependences between all the system's components. We concretize the abstract architecture with two formal methods that are common in runtime verification: temporal logic and regular expressions. In particular, and because we are in the context of real-time systems verification, we present a formal model of monitor based in timed regular expressions, as well as in metric temporal logic with durations. 
-
+The main contribution of this paper is a rich language in which we can
+specify, implement, and verify safety-critical RTSs. Our proposal
+extends existing languages with a primitive notion of off-line
+scheduler that ensures non-interference and adequate preemption
+between concurrent tasks. The off-line scheduling is calculated based
+on the worst-execution times calculated directly from the bodies of
+the tasks considered, and taking into account information about their
+periods and deadlines.
 
 \subsection{Paper Organization}
+
+This paper is organized as follows. In Section \ref{SyntaxSemantics}
+we introduce both the syntax and operational semantics of our language
+proposal. In Section \ref{Assertion} we describe the syntax of the
+assertion language considered, as well as the proof systems designed
+to capture the expected behavior of the structure of our hierarquical
+programming language. In \ref{Soudness} we give a soundness proof of
+the deductive system and the operational semantics defined in Seciont
+\ref{SyntaxSemantics} and present some brief references to its
+mechanization in the Coq proof assistant. In Section \ref{Ex} we
+detail the specification and implementation of the mine pump example
+of Burns \cite{} within our language, and show we have proved its more
+relevant properties. Finally, we draw some conclusions and point to
+future work to leverage the proposed ideas to a real-work example
+level.
+
+
+
+\section{Syntax and Operational Semantics}
+\label{SyntaxSemantics}
+
+The programming language we are about to introduce targets the
+development of simple, yet non-trivial, hierarquical RTSs. An
+hierarquical RTS is a RTS built from components with their own
+real-time constraints and taskset, as well as possibly different
+internal scheduling schemes. Components in a hierarquical RTS respect
+a global toplevel scheduling policy, but their internal task set and
+scheduling policy are opaque to external analysis by other components.
+
+IMP$^\theta$ programs are interpreted over a fine-grained operational
+semantics that considers a global clock value $\theta$ capturing the
+evolution of time during program computation. Hence, we extend
+traditional small-step structural operational semantic to have a
+fined-grained notion of execution cost of the segments of the program
+under evaluation. This kind of semantics is needed in order to allow
+off-line schedulability to determine how a concurrent, safety-critical
+RTS launches and preempts its composing tasks. The semantic is a
+relational one over 
+
+\section{Assertion Language and Axiomatic Semantics}
+\label{Assertion}
+
 
 
 \section{Related Work}
