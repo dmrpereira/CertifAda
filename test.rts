@@ -1,0 +1,23 @@
+system Cool is
+  rt_param SchAlg(RM);
+
+component C1 is
+  rt_param SchAlg(EDF);
+  rt_param TimeUnit(Seconds);
+  rt_param Deadline(12);
+vars
+  x : Nat;
+begin
+ x := 12;
+end C1;
+
+component C2 is
+ rt_param SchAlg(RM);
+vars
+ y : Bool;
+begin
+ y := false;
+end C2;
+
+end Cool;
+

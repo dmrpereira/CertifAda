@@ -15,7 +15,7 @@ package Re_Spec is
    procedure Show(R:Re);
    
 private
-   
+    
    type Re_Node(T:Re_Kind);
    
    type Re is access all Re_Node;

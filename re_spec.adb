@@ -1,5 +1,7 @@
 package body Re_Spec is
    
+   
+   
    function What_Re_Kind(X:Re) return Re_Kind is
    begin
       return X.T;

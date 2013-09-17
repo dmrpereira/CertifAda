@@ -1,14 +1,54 @@
 
-NATURAL (0|[1-9][0-9]*)
-VAR_ID ([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*
-
+GEN_CHAR [<>!+-%@]
+LPAR "("
+RPAR ")"
+LBRAC "{"
+RBRAC "}"
+SEQ ";"
+NATURAL (0|([1-9]([0-9])*))
+IDENTIFIER [a-zA-Z]([_a-zA-Z0-9])*
+ASSG ":="
+SYSTEM "system"
+COMPONENT "component"
+PRAGMA "pragma"
+RT_PARAM "rt_param"
+IF "if"
+IS "is"
+THEN "then"
+ELSE "else"
+END "end"
+WHILE "while"
+VARIANT "variant"
+DO "do"
+TYPE ("Nat"|"Bool")
+BOOL_VAL ("true"|"false")
+RT_PARAM_ARG ("SchAlg"|"Period"|"Deadline"|"WCET"|"TimeUnit")
+TIME_UNIT ("Seconds"|"MiliSeconds")
+SCH_ALG ("RM"|"EDF"|"DM")
 
 %%
 
-NATURAL { Text_IO.Put("Found Natural Number"); Text_IO.New_Line; }
-VAR_ID { Text_IO.Put("Found Variable Name"); Text_IO.New_Line; }
-\n { Text_IO.Put("Found NewLine") ; Text_IO.New_Line; }
-. { Text_IO.put("Found something wrong!!!"); Text_IO.New_Line; }
+-- {} {Text_IO.Put();}
+{SEQ} {Text_IO.Put("Seq");}
+{ASSG} {Text_IO.Put("AssgTo");}
+{NATURAL} { Text_IO.Put("NatVal(" & YYText &")");}
+{BOOL_VAL} { Text_IO.Put("BoolVal("& YYText &")");}
+{SYSTEM} { Text_IO.Put("System");}
+{SCH_ALG} { Text_IO.Put("Algorithm(" & YYText & ")");}
+{COMPONENT} { Text_IO.Put("Component");}
+{RT_PARAM} { Text_IO.Put("RealTimeParameter");}
+{RT_PARAM_ARG} { Text_IO.Put("RealTimeArg(" & YYText & ")");}
+{PRAGMA} { Text_IO.Put("Pragma");}
+{END} { Text_IO.Put("End");}
+{IS} { Text_IO.Put("Is");}
+{THEN} { Text_IO.Put("Then");}
+{ELSE} { Text_IO.Put("Else");}
+{WHILE} { Text_IO.Put("While");}
+{DO} { Text_IO.Put("Do");}
+{TYPE} { Text_IO.Put("Type(" & YYText & ")");}
+{IDENTIFIER} { Text_IO.Put("Id(" & YYText &")");}
+\n { Text_IO.New_Line; }
+
 
 %%
 
@@ -20,11 +60,20 @@ type Token is (End_of_Input, Error);
 
 ##
 
+fd : Text_IO.File_Type;
+tok : Token;
+package Bool_IO is new Enumeration_IO(Boolean);
+
 begin
+  open_input(Argument(1));
+ 
+  doit:
+  loop
+   tok := yylex;
+   exit doit when yy_eof_has_been_seen;
+  end loop doit;
 
-  Text_IO.Put(Command_Name);
-  Text_IO.New_Line;
-
+  close_input;
 end Lexer;
 
 
