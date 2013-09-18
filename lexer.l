@@ -1,6 +1,6 @@
 BOOLVAL ("true"|"false")
 NATURAL (0|([1-9]([0-9])*))
-IDENTIFIER [a-zA-Z]([_a-zA-Z0-9])*
+ID [a-zA-Z]([_a-zA-Z0-9])*
 STRING (\"([^\\\"\n]|\\.)*[\"\n])
 
 SYSTEM "system"
@@ -99,7 +99,7 @@ RBRAC "}"
 -- Real-time parameters for system, components, and tasks
 {PARAM_SCH}|{PARAM_DDL}|{PARAM_PRD}|{PARAM_TIME} {Text_IO.Put("RTPARAM("&YYText&")");}
 
--- Formal specifications
+-- Formal specifications	
 {PRE}|{POST}|{GUARANTEE}|{ASSERT}  {Text_IO.Put("SPEC("&YYText&")");}
 -- Dynamic ones
 {DYN_PRE}|{DYN_POST}|{DYN_ASSERT}  {Text_IO.Put("DYN_SPEC("&YYText&")");}
@@ -144,7 +144,7 @@ RBRAC "}"
 {FORALL}|{EXISTS} { Text_IO.Put("Quantif("&YYText&")");}
 {IMP}|{EQUIV}|{NOT}|{AND}|{OR} { Text_IO.Put("LOp("&YYText&")");}
 
-{IDENTIFIER}   { Text_IO.Put("ID(" & YYText &")"); }
+{ID}   { Text_IO.Put("ID(" & YYText &")"); }
 \n             { Text_IO.New_Line; }
 
 
