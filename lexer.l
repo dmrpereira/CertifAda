@@ -8,7 +8,7 @@ COMPONENT "component"
 TASK "task"
 
 WITH "with"
-
+-- Functions, procedures, and its parameters
 FUNC      "fun"
 PROC      "proc"
 PARAM_IN  "in"
@@ -32,6 +32,21 @@ OR "or"
 AND "and"
 NOT "not"
 
+ADD "+"
+SUB "-"
+MUL "*"
+DIV "div"
+MOD "mod"
+
+EQ "=="
+NEQ "!="
+LT "<"
+GT ">"
+LE "<="
+GE ">="
+
+SEQ ";"
+
 
 VARS "vars"
 OPS "ops"
@@ -47,8 +62,6 @@ PARAM_TIME  "TimeUnit"
 TIME_UNIT ("NanoSecs"|"Secs"|"MiniSecs")
 
 ASSG (:=)
-
-SEQ ";"
 
 IF "if"
 FI "fi"
@@ -83,7 +96,7 @@ RBRAC "}"
 
 -- Operators
 ("=="|"!="|">"|"<")    { Text_IO.Put("Comp("& YYText &")");}
-("+"|"-"|"*"|"div"|"mod")     { Text_IO.Put("Op("& YYText &")");}
+("+"|"-"|"*"|"/"|"%")     { Text_IO.Put("Op("& YYText &")");}
 
 -- Toplevel Structural units
 {SYSTEM}       { Text_IO.Put("SYSTEM");}
@@ -151,6 +164,7 @@ RBRAC "}"
 %%
 
 with Ada.Command_Line; use Ada.Command_Line;
+with hrt_tokens; use hrt_tokens;
 
 procedure Lexer is
 

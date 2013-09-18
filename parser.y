@@ -4,7 +4,7 @@
 %right ASSG 
 %left '+' '-'
 
-%ID
+%token ID
 %token SYSTEM
 %token COMPONENT
 %token TASK
@@ -15,6 +15,13 @@
 %token PARAM_OUT
 %token RETURN
 %token NULL 
+
+%token LT
+%token GT
+%token LE
+%token GE
+%token EQ
+%token NEQ
 
 %token SPECS
 %token PRE
@@ -47,6 +54,18 @@
 
 %token ASSG
 
+%token ADD
+%token SUB
+%token MUL
+%token DIV
+%token MOD
+
+%token EQ
+%token NEQ
+%token LT
+%token GT
+%token LE
+%token GE
 %token SEQ
 
 %token IF
@@ -69,17 +88,35 @@
 %token TYPE_STRING
 %token TYPE_FLOAT
 
-LPAR "("
-RPAR ")"
-LBRAC "{"
-RBRAC "}"
-
-
-
-
 {
 	
 
 }
+
+%%
+
+sys : SYSTEM ID system_body END ID SEQ;
+
+system_body : COMPONENT;
+
+aexp : aexp ADD aexp {}
+    |  aexp SUB aexp {}
+    |  aexp MUL aexp {}
+    |  aexp DIV aexp {}
+    |  aexp MOD aexp {}
+    |  ID {}
+    |  NATURAL {}
+;
+
+bexp : aexp LT aexp {}
+    |  aexp GT aexp {}
+    |  aexp GE aexp {}
+    |  aexp LE aexp {}
+    |  aexp EQ aexp {}
+    |  aexp NEQ aexp {}
+    |  bexp AND bexp {}
+    |  bexp OR bexp {}
+    |  BOOLVAL  {}
+;
 
 %%

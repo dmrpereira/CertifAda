@@ -1,7 +1,5 @@
 with Ada.Text_IO; use Ada.Text_IO;
---with Virtual_Machine; 
---with Instruction_Spec; use Instruction_Spec;
---with Arith_Expr_Spec; use Arith_Expr_Spec;
+with Ada.Command_Line; use Ada.Command_Line;
 
 
 procedure Main is
