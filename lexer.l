@@ -1,6 +1,7 @@
 BOOLVAL ("true"|"false")
 NATURAL (0|([1-9]([0-9])*))
 IDENTIFIER [a-zA-Z]([_a-zA-Z0-9])*
+STRING (\"([^\\\"\n]|\\.)*[\"\n])
 
 SYSTEM "system"
 COMPONENT "component"
@@ -13,11 +14,16 @@ PROC      "proc"
 PARAM_IN  "in"
 PARAM_OUT "out"
 RETURN "return"
+NULL "null"
 
 SPECS "specs"
 PRE "@pre"
+DYN_PRE "@dynamic_pre"
 POST "@post"
+DYN_POST "@dynamic_post"
 GUARANTEE "@guarantee"
+ASSERT "@assert"
+DYN_ASSERT "@dynamic_assert"
 FORALL "forall"
 EXISTS "ex"
 IMP "->"
@@ -79,38 +85,43 @@ RBRAC "}"
 ("=="|"!="|">"|"<")    { Text_IO.Put("Comp("& YYText &")");}
 ("+"|"-"|"*"|"div"|"mod")     { Text_IO.Put("Op("& YYText &")");}
 
--- Program structure tokens
+-- Toplevel Structural units
 {SYSTEM}       { Text_IO.Put("SYSTEM");}
 {COMPONENT}    { Text_IO.Put("COMPONENT");}
 {TASK}       { Text_IO.Put("TASK");}
 {FUNC}       { Text_IO.Put("FUNC");}
 {PROC}       { Text_IO.Put("PROC");}
-{RETURN}     { Text_IO.Put("RET");}
+
+-- Section definitions
 {WITH} { Text_IO.Put("WITH");}
 {SPECS}|{VARS}|{OPS} {Text_IO.Put("SECTION("&YYText&")");}
+
 -- Real-time parameters for system, components, and tasks
 {PARAM_SCH}|{PARAM_DDL}|{PARAM_PRD}|{PARAM_TIME} {Text_IO.Put("RTPARAM("&YYText&")");}
+
 -- Formal specifications
-{PRE}|{POST}|{GUARANTEE}  {Text_IO.Put("SPEC("&YYText&")");}
+{PRE}|{POST}|{GUARANTEE}|{ASSERT}  {Text_IO.Put("SPEC("&YYText&")");}
+-- Dynamic ones
+{DYN_PRE}|{DYN_POST}|{DYN_ASSERT}  {Text_IO.Put("DYN_SPEC("&YYText&")");}
 
 
 -- Function/Procedure parameters
 {PARAM_IN}|{PARAM_OUT} { Text_IO.Put("Param("& YYText &")");}
+{RETURN} { Text_IO.Put("RET");}
+{NULL} { Text_IO.Put("NULL");}
 
-
-{VARS}       { Text_IO.Put("VARS");}
-{OPS}       { Text_IO.Put("OPS");}
---{RT_PARAM}     { Text_IO.Put("RTPARAM");}
---{RT_PARAM_NAME} { Text_IO.Put("RTARG(" & YYText & ")");}
-{SCH_ALG}      { Text_IO.Put("SCHALG(" & YYText & ")");}
+-- Scheduling algorithms and time unit under consideration
+{SCH_ALG}   { Text_IO.Put("SCHALG(" & YYText & ")");}
 {TIME_UNIT} { Text_IO.Put("TU(" & YYText & ")");}
-{BEGIN}         { Text_IO.Put("BEGIN");}
+
+-- Block markers
+{BEGIN}     { Text_IO.Put("BEGIN");}
+{END}          { Text_IO.Put("END"); }
 
 
 -- Sequential tokens
 {ASSG}         { Text_IO.Put("ASSG");}
 {SEQ}          { Text_IO.Put(";");}
-{END}          { Text_IO.Put("END"); }
 {IF}           { Text_IO.Put("IF"); }
 {THEN}         { Text_IO.Put("THEN"); }
 {ELSE}         { Text_IO.Put("ELSE"); }
@@ -119,7 +130,15 @@ RBRAC "}"
 {VARIANT}      { Text_IO.Put("VARIANT");} 
 {DO}           { Text_IO.Put("DO"); }
 {DONE}         { Text_IO.Put("DONE"); }
+
+-- Time handling statements
+{DELAY}        { Text_IO.Put("DELAY"); }
+{DELAYUNTIL}   { Text_IO.Put("DELAY_UNTIL");}
+
+
+-- Currently suported types
 {TYPE_NAT}|{TYPE_FLOAT}|{TYPE_STRING}|{TYPE_BOOL} { Text_IO.Put("TYPE(" & YYText & ")"); }
+{STRING} { Text_IO.Put("STRING("&YYText&")");}
 
 -- Assertion Language tokens
 {FORALL}|{EXISTS} { Text_IO.Put("Quantif("&YYText&")");}

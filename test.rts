@@ -3,9 +3,13 @@ system Cool with
 begin
 
 component C1 with
- Scheduler(EDF);
+specs
+ @scheduler EDF;
+ @period 40;
+ @deadline 30;
 vars
   x : nat;
+  s : string := "ola mundo";
 ops
  proc tool(r:in out nat) with
  specs
@@ -18,6 +22,7 @@ ops
    else
     r := r - 1;
    end if;
+   @dynamic_assert { r > 1 };
   end;
 begin
  task T1 with
