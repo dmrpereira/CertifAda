@@ -10,14 +10,11 @@ project CertifAda is
       for Dot_Replacement use "-";
    end Naming;
 
-   for Languages use ("Ada", "Makefile");
-
    package Ide is
       for Vcs_Kind use "Git";
    end Ide;
 
    package Make is
-      for Makefile use "Makefile";
    end Make;
 
    package Compiler is

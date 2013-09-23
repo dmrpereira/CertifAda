@@ -164,27 +164,32 @@ RBRAC "}"
 %%
 
 with Ada.Command_Line; use Ada.Command_Line;
-with hrt_tokens; use hrt_tokens;
+with parser_tokens; use parser_tokens;
+--with parser; use parser;
 
-procedure Lexer is
 
-type Token is (End_of_Input, Error);
+package Lexer is
+  function yylex return token;
+end Lexer;
+
+
+package body Lexer is
 
 ##
 
-fd : Text_IO.File_Type;
-tok : Token;
+--fd : Text_IO.File_Type;
+--tok : Token;
 
-begin
-  open_input(Argument(1));
+--begin
+--  open_input(Argument(1));
  
-  doit:
-  loop
-   tok := yylex;
-   exit doit when yy_eof_has_been_seen;
-  end loop doit;
+--  doit:
+--  loop
+--   tok := yylex;
+--   exit doit when yy_eof_has_been_seen;
+--  end loop doit;
 
-  close_input;
+--  close_input;
 end Lexer;
 
 
