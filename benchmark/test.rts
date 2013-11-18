@@ -1,0 +1,49 @@
+system Cool with
+ Scheduler(RM);
+begin
+
+component C1 with
+specs
+ @scheduler EDF;
+ @period 40;
+ @deadline 30;
+vars
+  x : nat;
+  s : string := "ola mundo";
+ops
+ proc tool(r:in out nat) with
+ specs
+  @pre r > 0;
+  @post r > 0;
+  @guarantee forall x:nat, r'change = x -> x > r;
+ begin
+   if r > 12 then
+    r := r + 1;
+   else
+    r := r - 1;
+   end if;
+   @dynamic_assert { r > 1 };
+  end;
+begin
+ task T1 with
+  Period(12);
+  Deadline(5);
+ vars
+  x : nat;
+ begin
+   x := 0;
+   tool(x);
+ end T1;
+
+ task T2 with
+  Period(30);
+  Deadline(20);
+ vars
+  y : nat ;
+ begin
+  y := 0;
+ end T2;
+
+end C1;
+
+end Cool;
